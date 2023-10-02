@@ -33,17 +33,11 @@ public class VotingService extends UnicastRemoteObject implements Service {
     }
 
     @Override
-    public synchronized int sendVote(Vote vote, ClientInterface client) throws RemoteException {
-
-        try {
-            client.voter(vote);
-        } catch (java.rmi.RemoteException ignored) {}
-
-        System.out.println("Vote du client: " + vote);
-        this.clientVotes.add(vote);
-        new Result(clientVotes).getResult();
-
-        return 1;
+    public synchronized void sendVotes(List<Vote> votes, ClientInterface client) throws RemoteException {
+        System.out.println("Votes du client "+client+": ");
+        votes.forEach( vote -> System.out.println(vote));
+        this.clientVotes.addAll(votes);
+        new Result(clientVotes).getResult(); // TODO : when vote ended
     }
 
 

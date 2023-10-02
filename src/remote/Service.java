@@ -10,5 +10,5 @@ import java.util.List;
 public interface Service extends Remote {
     public int getVote() throws RemoteException;
     public List<String> getCandidates() throws RemoteException;
-    public int sendVote(Vote vote, ClientInterface client) throws RemoteException;
+    public void sendVotes(List<Vote> votes, ClientInterface client) throws RemoteException;
 }

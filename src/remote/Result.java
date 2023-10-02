@@ -14,15 +14,19 @@ public class Result implements Serializable {
         this.clientVotes = clientVotes;
     }
 
-    public void getResult(){
-
+    public void getResult() {
         Map<Integer, Integer> rankSums = clientVotes.stream()
                 .collect(Collectors.groupingBy(Vote::getRank,
                         Collectors.summingInt(Vote::getValue)));
 
-        System.out.println("Result :");
-        rankSums.forEach((rank, sum) -> {
-            System.out.println("\tCandidate " + rank + ": " + sum);
+        List<Map.Entry<Integer, Integer>> sortedRankSums = rankSums.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
+                .collect(Collectors.toList());
+
+        System.out.println("Result:");
+        sortedRankSums.forEach(entry -> {
+            System.out.println("\tCandidate " + entry.getKey() + ": " + entry.getValue());
         });
     }
 }
