@@ -28,6 +28,11 @@ public class VotingService extends UnicastRemoteObject implements Service {
     }
 
     @Override
+    public List<String> getCandidates() throws RemoteException {
+        return candidates.stream().map(Candidate::toString).toList();
+    }
+
+    @Override
     public synchronized int sendVote(Vote vote, ClientInterface client) throws RemoteException {
 
         try {

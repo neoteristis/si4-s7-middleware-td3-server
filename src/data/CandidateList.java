@@ -29,7 +29,6 @@ public class CandidateList extends ArrayList<Candidate> {
                     rank++;
                 }
             }
-            print();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

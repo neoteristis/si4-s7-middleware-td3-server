@@ -29,7 +29,7 @@ public class Candidate  {
 
     @Override
     public String toString() {
-        return this.rank + ": " + this.firstName + " " + this.lastName + "\"" + this.pitch + "\"";
+        return this.rank + ": " + this.firstName + " " + this.lastName + " \"" + this.pitch + "\"";
     }
 }
 
