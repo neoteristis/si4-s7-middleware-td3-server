@@ -20,13 +20,9 @@ public class Result implements Serializable {
                 .collect(Collectors.groupingBy(Vote::getRank,
                         Collectors.summingInt(Vote::getValue)));
 
+        System.out.println("Result :");
         rankSums.forEach((rank, sum) -> {
-            System.out.println("Result" + rank + ": " + sum);
+            System.out.println("\tCandidate " + rank + ": " + sum);
         });
-    }
-
-    @Override
-    public String toString() {
-        return "Result : ";
     }
 }

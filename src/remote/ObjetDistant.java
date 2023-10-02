@@ -2,7 +2,7 @@ package remote;
 
 import client.Vote;
 
-import java.rmi.AlreadyBoundException;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -13,9 +13,9 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
 
     private Service service;
 
-    public ObjetDistant(int numPort) throws RemoteException {
+    public ObjetDistant(int numPort) throws IOException {
         super(numPort);
-        this.service = new ObjetService(10);
+        this.service = new VotingService(numPort);
     }
 
     public Service getNewService() throws RemoteException {
@@ -33,11 +33,12 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
     public static void main(String[] args) {
         try {
             Registry registry = LocateRegistry.createRegistry(1099);
-            System.out.println("Registry started on port 1099");
-            Distant objectDistant = new ObjetDistant(0);
+            Distant objectDistant = new ObjetDistant(10);
             registry.rebind("objetDistant", objectDistant);
         } catch (RemoteException e) {
             System.out.println("Error with the server side...");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -8,17 +8,17 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjetService extends UnicastRemoteObject implements Service {
+public class VotingService extends UnicastRemoteObject implements Service {
     private int number;
     private List<Vote> clientVotes;
 
-    public ObjetService(int numPort,int number) throws RemoteException{
+    public VotingService(int numPort, int number) throws RemoteException{
         super(numPort);
         this.number = number;
         this.clientVotes = new ArrayList<>();
     }
 
-    public ObjetService(int number) throws RemoteException {
+    public VotingService(int number) throws RemoteException {
         super();
         this.number = number;
         this.clientVotes = new ArrayList<>();
