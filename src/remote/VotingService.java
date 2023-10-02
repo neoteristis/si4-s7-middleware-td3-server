@@ -2,11 +2,8 @@ package remote;
 
 import client.ClientInterface;
 import client.Vote;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import data.CandidateList;
+import data.UserList;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,38 +12,14 @@ import java.util.List;
 public class VotingService extends UnicastRemoteObject implements Service {
 
     private List<Vote> clientVotes;
-    private List<Candidate> candidates;
-    private List<User> users;
+    private CandidateList candidates;
+    private UserList users;
 
     public VotingService() throws RemoteException {
         super();
         this.clientVotes = new ArrayList<>();
-        candidates = new ArrayList<>();
-        String csvFilePath = "src/data/candidates.csv";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
-            String line;
-            int rank = 1;
-
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" ");
-                if (parts.length == 2) {
-                    String firstName = parts[0];
-                    String lastName = parts[1];
-
-                    Candidate candidate = new Candidate(rank, firstName, lastName);
-                    candidates.add(candidate);
-
-                    rank++;
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(candidates);
-        candidates.forEach( candidate -> candidate.toString());
+        users = new UserList("src/data/users.csv");
+        candidates = new CandidateList("src/data/candidates.csv");
     }
 
     @Override

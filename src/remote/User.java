@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String studentNumber;
+    private String studentId;
     private String password;
     private List<Vote> votes;
 
-    public User(String studentNumber, String password) {
-        this.studentNumber = studentNumber;
+    public User(String studentId, String password) {
+        this.studentId = studentId;
         this.password = password;
         this.votes = new ArrayList<>();
     }
@@ -25,4 +25,11 @@ public class User {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "User { " +
+                "studentId='" + studentId + '\'' +
+                ", password='" + password + '\'' +
+                " }";
+    }
 }

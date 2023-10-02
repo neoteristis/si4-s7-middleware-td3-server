@@ -4,12 +4,14 @@ public class Candidate  {
     private int rank;
     private String firstName;
     private String lastName;
+    private String pitch;
     private int score;
 
-    public Candidate(int rank, String firstName, String lastName) {
+    public Candidate(int rank, String firstName, String lastName, String pitch) {
         this.rank = rank;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.pitch = pitch;
         this.score = 0;
     }
 
@@ -27,7 +29,7 @@ public class Candidate  {
 
     @Override
     public String toString() {
-        return "Candidate " + this.rank + ": '" + this.firstName + " " + lastName ;
+        return this.rank + ": " + this.firstName + " " + this.lastName + "\"" + this.pitch + "\"";
     }
 }
 
