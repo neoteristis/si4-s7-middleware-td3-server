@@ -27,7 +27,7 @@ public class Candidate  {
 
     @Override
     public String toString() {
-        return "Candidate" + this.rank + ": '" + this.firstName + lastName ;
+        return "Candidate " + this.rank + ": '" + this.firstName + " " + lastName ;
     }
 }
 

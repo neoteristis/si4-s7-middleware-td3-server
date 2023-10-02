@@ -15,7 +15,7 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
 
     public ObjetDistant(int numPort) throws IOException {
         super(numPort);
-        this.service = new VotingService(numPort);
+        this.service = new VotingService();
     }
 
     public Service getNewService() throws RemoteException {
