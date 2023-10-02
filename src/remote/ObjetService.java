@@ -38,6 +38,7 @@ public class ObjetService extends UnicastRemoteObject implements Service {
 
         System.out.println("Vote du client: " + vote);
         this.clientVotes.add(vote);
+        new Result(clientVotes).getResult();
 
         return this.number;
     }
