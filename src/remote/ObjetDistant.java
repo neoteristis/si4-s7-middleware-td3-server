@@ -22,11 +22,6 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
         return this.service;
     }
 
-    @Override
-    public Result res(List<Vote> clientVotes) throws RemoteException {
-        return new Result(clientVotes);
-    }
-
     public int getVote() throws RemoteException {
         return this.service.getVote(); }
 

@@ -1,8 +1,6 @@
 package remote;
 
-import helper.Authentication;
-
-public class Candidate  {
+public class Candidate{
     private final String firstName;
     private final String lastName;
     private final String pitch;
@@ -31,6 +29,10 @@ public class Candidate  {
 
     @Override
     public String toString() {
-        return this.rank + ": " + this.firstName + " " + this.lastName + " \"" + this.pitch + "\"";
+        return this.rank + ": " + this.firstName + " " + this.lastName;
+    }
+
+    public String toStringWithPitch() {
+        return toString()  + " \"" + this.pitch + "\"";
     }
 }

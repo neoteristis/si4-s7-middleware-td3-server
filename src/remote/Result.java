@@ -9,8 +9,11 @@ import java.util.stream.Collectors;
 
 public class Result implements Serializable {
 
+    private List<Candidate> candidates;
     private List<Vote> clientVotes;
-    public Result(List<Vote> clientVotes) {
+
+    public Result(List<Candidate> candidates, List<Vote> clientVotes) {
+        this.candidates = candidates;
         this.clientVotes = clientVotes;
     }
 
@@ -24,9 +27,10 @@ public class Result implements Serializable {
                 .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                 .collect(Collectors.toList());
 
-        System.out.println("Result:");
+        System.out.println("Résultats :");
         sortedRankSums.forEach(entry -> {
-            System.out.println("\tCandidate " + entry.getKey() + ": " + entry.getValue());
+            String label = candidates.get(entry.getKey()-1).toString().substring(3);
+            System.out.println("\t" + label + ": " + entry.getValue());
         });
     }
 }

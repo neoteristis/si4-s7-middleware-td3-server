@@ -31,15 +31,13 @@ public class VotingService extends UnicastRemoteObject implements Service {
 
     @Override
     public List<String> getCandidates() throws RemoteException {
-        return candidates.stream().map(Candidate::toString).toList();
+        return candidates.stream().map(Candidate::toStringWithPitch).toList();
     }
 
     @Override
     public synchronized void sendVotes(List<Vote> votes, ClientInterface client) throws RemoteException {
-        System.out.println("Votes du client " + client + ": ");
-        votes.forEach(vote -> System.out.println(vote));
         this.clientVotes.addAll(votes);
-        new Result(clientVotes).getResult(); // TODO : when vote ended
+        new Result(candidates, clientVotes).getResult(); // TODO : when vote ended
     }
 
     @Override
