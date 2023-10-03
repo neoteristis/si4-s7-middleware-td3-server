@@ -1,6 +1,5 @@
 package data;
 
-import client.ClientInterface;
 import exceptions.HasAlreadyVotedException;
 import remote.User;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 
 public class UserList extends ArrayList<User> {
 
-    public UserList(String csvFilePath){
+    public UserList(String csvFilePath) {
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
@@ -40,6 +39,33 @@ public class UserList extends ArrayList<User> {
         for (User user : this) {
             if (user.getStudentID().equals(studentID)) {
                 return user.verifyOneTimePassword(otp);
+            }
+        }
+        return false;
+    }
+
+    public String updateOTP(String studentID, String oldOTP) {
+        if (this.authenticate(studentID, oldOTP)) {
+            for (User user : this) {
+                if (user.getStudentID().equals(studentID)) {
+                    user.updateOneTimePassword();
+                    user.resetHasAlreadyVoted();
+
+                    try {
+                        return user.getOneTimePassword();
+                    } catch (HasAlreadyVotedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        throw new RuntimeException("Invalid OTP");
+    }
+
+    public boolean isStudentIDValid(String studentID) {
+        for (User user : this) {
+            if (user.getStudentID().equals(studentID)) {
+                return true;
             }
         }
         return false;

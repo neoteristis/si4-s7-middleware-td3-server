@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import java.util.List;
 
 public class ObjetDistant extends UnicastRemoteObject implements Distant {
@@ -31,7 +32,7 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
             Distant objectDistant = new ObjetDistant(10);
             registry.rebind("objetDistant", objectDistant);
         } catch (RemoteException e) {
-            System.out.println("Error with the server side...");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class User {
     private final String studentId;
-    private final String oneTimePassword;
+    private String oneTimePassword;
     private final List<Vote> votes;
     private boolean hasAlreadyVoted;
 
@@ -37,6 +37,10 @@ public class User {
         return this.oneTimePassword;
     }
 
+    public void resetHasAlreadyVoted() {
+        this.hasAlreadyVoted = false;
+    }
+
     public boolean verifyOneTimePassword(String password) {
         return this.oneTimePassword.equals(password);
     }
@@ -48,5 +52,9 @@ public class User {
 
     public String getStudentID() {
         return this.studentId;
+    }
+
+    public void updateOneTimePassword() {
+        this.oneTimePassword = Authentication.generateOTP();
     }
 }

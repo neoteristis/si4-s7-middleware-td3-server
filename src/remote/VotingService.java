@@ -42,11 +42,26 @@ public class VotingService extends UnicastRemoteObject implements Service {
 
     @Override
     public synchronized String getUserOTP(String studentID) throws RemoteException, HasAlreadyVotedException {
-        return users.getOTP(studentID);
+        try {
+            return users.getOTP(studentID);
+        } catch (HasAlreadyVotedException e) {
+            System.out.println("User " + studentID + " has already voted.");
+            throw new HasAlreadyVotedException();
+        }
+    }
+
+    @Override
+    public synchronized String updateUserOTP(String studentID, String oldOTP) throws RemoteException {
+        return users.updateOTP(studentID, oldOTP);
     }
 
     @Override
     public synchronized boolean authenticate(String studentID, String otp) throws RemoteException {
         return users.authenticate(studentID, otp);
+    }
+
+    @Override
+    public boolean isStudentIDValid(String studentID) throws RemoteException {
+        return users.isStudentIDValid(studentID);
     }
 }
