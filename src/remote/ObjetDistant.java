@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ObjetDistant extends UnicastRemoteObject implements Distant {
 
-    private Service service;
+    private final Service service;
 
     public ObjetDistant(int numPort) throws IOException {
         super(numPort);

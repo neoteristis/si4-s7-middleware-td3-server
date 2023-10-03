@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Result implements Serializable {
+    private final List<Vote> clientVotes;
 
-    private List<Vote> clientVotes;
     public Result(List<Vote> clientVotes) {
         this.clientVotes = clientVotes;
     }
@@ -21,8 +21,6 @@ public class Result implements Serializable {
                         Collectors.summingInt(Vote::getValue)));
 
         System.out.println("Result :");
-        rankSums.forEach((rank, sum) -> {
-            System.out.println("\tCandidate " + rank + ": " + sum);
-        });
+        rankSums.forEach((rank, sum) -> System.out.println("\tCandidate " + rank + ": " + sum));
     }
 }
