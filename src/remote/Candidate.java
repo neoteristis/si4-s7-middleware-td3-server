@@ -1,5 +1,7 @@
 package remote;
 
+import helper.Authentication;
+
 public class Candidate  {
     private final String firstName;
     private final String lastName;

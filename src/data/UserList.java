@@ -15,7 +15,7 @@ public class UserList extends ArrayList<User> {
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                this.add(new User(line, ""));
+                this.add(new User(line));
             }
 
         } catch (FileNotFoundException e) {

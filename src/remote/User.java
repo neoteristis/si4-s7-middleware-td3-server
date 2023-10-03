@@ -1,20 +1,24 @@
 package remote;
 
 import client.Vote;
+import exceptions.HasAlreadyVotedException;
+import helper.Authentication;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private String studentId;
-    private String password;
-    private List<Vote> votes;
+    private final String studentId;
+    private final String oneTimePassword;
+    private final List<Vote> votes;
+    private boolean hasAlreadyVoted;
 
-    public User(String studentId, String password) {
+    public User(String studentId) {
         this.studentId = studentId;
-        this.password = password;
+        this.oneTimePassword = Authentication.generateOTP();
         this.votes = new ArrayList<>();
+        this.hasAlreadyVoted = false;
     }
 
     public List<Vote> getVotes() {
@@ -25,11 +29,20 @@ public class User {
         return null;
     }
 
+    public String getOneTimePassword() throws HasAlreadyVotedException {
+        if (this.hasAlreadyVoted) {
+            throw new HasAlreadyVotedException();
+        }
+        this.hasAlreadyVoted = true;
+        return this.oneTimePassword;
+    }
+
+    public boolean verifyOneTimePassword(String password) {
+        return this.oneTimePassword.equals(password);
+    }
+
     @Override
     public String toString() {
-        return "User { " +
-                "studentId='" + studentId + '\'' +
-                ", password='" + password + '\'' +
-                " }";
+        return this.studentId;
     }
 }
