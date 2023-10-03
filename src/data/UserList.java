@@ -1,5 +1,7 @@
 package data;
 
+import client.ClientInterface;
+import exceptions.HasAlreadyVotedException;
 import remote.User;
 
 import java.io.BufferedReader;
@@ -25,4 +27,21 @@ public class UserList extends ArrayList<User> {
         }
     }
 
+    public String getOTP(String studentID) throws HasAlreadyVotedException {
+        for (User user : this) {
+            if (user.getStudentID().equals(studentID)) {
+                return user.getOneTimePassword();
+            }
+        }
+        return null;
+    }
+
+    public boolean authenticate(String studentID, String otp) {
+        for (User user : this) {
+            if (user.getStudentID().equals(studentID)) {
+                return user.verifyOneTimePassword(otp);
+            }
+        }
+        return false;
+    }
 }

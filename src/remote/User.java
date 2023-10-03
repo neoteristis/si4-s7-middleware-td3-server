@@ -45,4 +45,8 @@ public class User {
     public String toString() {
         return this.studentId;
     }
+
+    public String getStudentID() {
+        return this.studentId;
+    }
 }

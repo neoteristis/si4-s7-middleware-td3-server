@@ -4,6 +4,8 @@ import client.ClientInterface;
 import client.Vote;
 import data.CandidateList;
 import data.UserList;
+import exceptions.HasAlreadyVotedException;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -34,11 +36,19 @@ public class VotingService extends UnicastRemoteObject implements Service {
 
     @Override
     public synchronized void sendVotes(List<Vote> votes, ClientInterface client) throws RemoteException {
-        System.out.println("Votes du client "+client+": ");
-        votes.forEach( vote -> System.out.println(vote));
+        System.out.println("Votes du client " + client + ": ");
+        votes.forEach(vote -> System.out.println(vote));
         this.clientVotes.addAll(votes);
         new Result(clientVotes).getResult(); // TODO : when vote ended
     }
 
+    @Override
+    public synchronized String getUserOTP(String studentID) throws RemoteException, HasAlreadyVotedException {
+        return users.getOTP(studentID);
+    }
 
+    @Override
+    public synchronized boolean authenticate(String studentID, String otp) throws RemoteException {
+        return users.authenticate(studentID, otp);
+    }
 }
