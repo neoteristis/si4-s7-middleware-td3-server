@@ -1,17 +1,19 @@
 package remote;
 
+import helper.Authentication;
+
 public class Candidate  {
-    private int rank;
-    private String firstName;
-    private String lastName;
-    private String pitch;
+    private final String firstName;
+    private final String lastName;
+    private final String pitch;
+    private final int rank;
     private int score;
 
     public Candidate(int rank, String firstName, String lastName, String pitch) {
-        this.rank = rank;
         this.firstName = firstName;
         this.lastName = lastName;
         this.pitch = pitch;
+        this.rank = rank;
         this.score = 0;
     }
 
@@ -23,7 +25,7 @@ public class Candidate  {
         return this.score;
     }
 
-    public void setScore(int value){
+    public void setScore(int score){
         this.score = score;
     }
 
@@ -32,4 +34,3 @@ public class Candidate  {
         return this.rank + ": " + this.firstName + " " + this.lastName + " \"" + this.pitch + "\"";
     }
 }
-
