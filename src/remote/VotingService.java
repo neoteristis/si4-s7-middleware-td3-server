@@ -32,7 +32,7 @@ public class VotingService extends UnicastRemoteObject implements Service {
 
     @Override
     public String getResults() throws RemoteException {
-        return result.toString();
+        return result != null ? result.toString() : "L'élection n'est pas terminé, patiente un peu..";
     }
 
 
@@ -42,15 +42,13 @@ public class VotingService extends UnicastRemoteObject implements Service {
         System.out.println(user + " a voté");
         user.setVotes(votes);
         clientVotes.addAll(votes);
-        if (isOver()) {
-            System.out.println("Tout le monde a voté");
-            result = new Result(candidates, clientVotes);
-            System.out.println(result);
-        }
+        if (users.stream().filter(u -> u.getVotes().isEmpty()).count() == 0)
+            end();
     }
 
-    public Boolean isOver(){
-        return users.stream().filter(user -> user.getVotes().isEmpty()).count() == 0;
+    public void end() throws RemoteException {
+        result = new Result(candidates, clientVotes);
+        System.out.println(getResults());
     }
 
     @Override
@@ -58,7 +56,7 @@ public class VotingService extends UnicastRemoteObject implements Service {
         try {
             return users.getOTP(studentID);
         } catch (HasAlreadyVotedException e) {
-            System.out.println("User " + studentID + " has already voted.");
+            //System.out.println("User " + studentID + " has already voted.");
             throw new HasAlreadyVotedException();
         }
     }

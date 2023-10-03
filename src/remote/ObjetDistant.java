@@ -7,8 +7,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class ObjetDistant extends UnicastRemoteObject implements Distant {
@@ -31,8 +29,9 @@ public class ObjetDistant extends UnicastRemoteObject implements Distant {
             registry.rebind("objetDistant", objectDistant);
             System.out.println("Tapez \"Stop\" pour terminer l'élection");
             Scanner scanner = new Scanner(System.in);
-            if (scanner.nextLine() == "Stop"){
-                    service.getResults();
+            if (scanner.nextLine().equals("Stop")){
+                VotingService vs = (VotingService) service;
+                vs.end();
             }
 
         } catch (RemoteException e) {
