@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
     private final String studentId;
     private final String oneTimePassword;
-    private final List<Vote> votes;
+    private List<Vote> votes;
     private boolean hasAlreadyVoted;
 
     public User(String studentId) {
@@ -23,6 +23,10 @@ public class User {
 
     public List<Vote> getVotes() {
         return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 
     public Boolean cast(Vote vote) throws RemoteException {

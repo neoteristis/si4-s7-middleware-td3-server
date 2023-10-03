@@ -16,17 +16,13 @@ public class VotingService extends UnicastRemoteObject implements Service {
     private List<Vote> clientVotes;
     private CandidateList candidates;
     private UserList users;
+    private Result result;
 
     public VotingService() throws RemoteException {
         super();
-        this.clientVotes = new ArrayList<>();
+        clientVotes = new ArrayList<>();
         users = new UserList("src/data/users.csv");
         candidates = new CandidateList("src/data/candidates.csv");
-    }
-
-    @Override
-    public int getVote() throws RemoteException {
-        return 1;
     }
 
     @Override
@@ -35,9 +31,26 @@ public class VotingService extends UnicastRemoteObject implements Service {
     }
 
     @Override
+    public String getResults() throws RemoteException {
+        return result.toString();
+    }
+
+
+    @Override
     public synchronized void sendVotes(List<Vote> votes, ClientInterface client) throws RemoteException {
-        this.clientVotes.addAll(votes);
-        new Result(candidates, clientVotes).getResult(); // TODO : when vote ended
+        User user = users.getByID(client.getStudentID());
+        System.out.println(user + " a voté");
+        user.setVotes(votes);
+        clientVotes.addAll(votes);
+        if (isOver()) {
+            System.out.println("Tout le monde a voté");
+            result = new Result(candidates, clientVotes);
+            System.out.println(result);
+        }
+    }
+
+    public Boolean isOver(){
+        return users.stream().filter(user -> user.getVotes().isEmpty()).count() == 0;
     }
 
     @Override

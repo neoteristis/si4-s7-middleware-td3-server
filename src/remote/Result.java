@@ -10,27 +10,30 @@ import java.util.stream.Collectors;
 public class Result implements Serializable {
 
     private List<Candidate> candidates;
-    private List<Vote> clientVotes;
+    List<Map.Entry<Integer, Integer>> sortedRankSums;
 
     public Result(List<Candidate> candidates, List<Vote> clientVotes) {
         this.candidates = candidates;
-        this.clientVotes = clientVotes;
-    }
 
-    public void getResult() {
         Map<Integer, Integer> rankSums = clientVotes.stream()
                 .collect(Collectors.groupingBy(Vote::getRank,
                         Collectors.summingInt(Vote::getValue)));
 
-        List<Map.Entry<Integer, Integer>> sortedRankSums = rankSums.entrySet()
+        sortedRankSums = rankSums.entrySet()
                 .stream()
                 .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                 .collect(Collectors.toList());
 
-        System.out.println("Résultats :");
-        sortedRankSums.forEach(entry -> {
+    }
+
+    @Override
+    public String toString() {
+        String result = "Résultats :\n";
+        for (Map.Entry<Integer, Integer> entry : sortedRankSums) {
             String label = candidates.get(entry.getKey()-1).toString().substring(3);
-            System.out.println("\t" + label + ": " + entry.getValue());
-        });
+            result += "\t" + label + ": " + entry.getValue() + "\n";
+        }
+        result += "\nVotre nouveau délégué(e) : "+ candidates.get(sortedRankSums.get(0).getKey()-1).toString().substring(3);
+        return result;
     }
 }

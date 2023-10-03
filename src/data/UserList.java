@@ -1,6 +1,5 @@
 package data;
 
-import client.ClientInterface;
 import exceptions.HasAlreadyVotedException;
 import remote.User;
 
@@ -43,5 +42,12 @@ public class UserList extends ArrayList<User> {
             }
         }
         return false;
+    }
+
+    public User getByID(String studentID){
+        for (User user : this){
+            if (user.getStudentID().equals(studentID)) return user;
+        }
+        return null;
     }
 }
